@@ -10,11 +10,33 @@
 </head>
 <body onload="subscribe();">
     <div>
+        <p>
+            1. Install and run docker desktop app<br/>
+            2. Cmd-prompt: In the root, run "docker-compose up" to start redis<br/>
+            3. Send a few messages to ensure Redis is running<br/>
+            4. Cmd-prompt: Turn redis off (ctrl c+c)<br/>
+            5. Send a few messages which will cause and exception<br/>
+            6. Cmd-prompt: Turn redis on again ("docker-compose up")<br/>
+            7. Send a few messages<br/>
+            <br/>
+            Result: SSE is unresponsive<br/>
+            <br/>
+            Reloading page wont help either<br/>
+            <br/>
+        </p>
+    </div>    
+    <div>
         <table>
             <tr>
                 <td>
-                    <input type="text" id="SSE_Message"/>
+                    <input type="text" id="SSE_Message" value="My message"/>
                     <button onclick="submitMessage();">Submit message</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table id="messageTable">
+                    </table>
                 </td>
             </tr>
         </table>

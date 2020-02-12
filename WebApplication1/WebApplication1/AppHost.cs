@@ -26,12 +26,11 @@ namespace WebApplication1
 
         private void OnCreated(IEventSubscription eventSub, IRequest request)
         {
-            Debug.WriteLine(eventSub);
         }
 
         private void OnPublish(IEventSubscription arg1, IResponse arg2, string arg3)
         {
-
+            Debug.WriteLine(arg3);
         }
 
         public override void Configure(Container container)
@@ -62,11 +61,13 @@ namespace WebApplication1
 
             Container.Register<IRedisClientsManager>(c =>
                 new RedisManagerPool("localhost:6379")
-            ); //.ReusedWithin(ReuseScope.Container);
+            );
 
             Container.Register<IServerEvents>(c =>
                 new RedisServerEvents(c.Resolve<IRedisClientsManager>())
-            ); //.ReusedWithin(ReuseScope.Container);
+            );
+
+            Container.Resolve<IServerEvents>().Start();
 
             Container.DefaultReuse = ReuseScope.Request;
 
@@ -77,14 +78,17 @@ namespace WebApplication1
 
         private object HandleException(IRequest httpReq, object request, Exception exception)
         {
-            Debugger.Break();
+            Debug.WriteLine(exception.Message);
 
             return null;
         }
 
         private void HandleUnhandledException(IRequest request, IResponse response, string operationName, Exception exception)
         {
+            Debug.WriteLine(exception.Message);
+
             Debugger.Break();
         }
     }
+
 }

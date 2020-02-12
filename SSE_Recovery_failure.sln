@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSE_Redis_Recovery_Failure", "SSE_Redis_Recovery_Failure\SSE_Redis_Recovery_Failure.csproj", "{328C61A4-0EEF-4201-9381-51E235C63D9E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1\WebApplication1.csproj", "{4389B305-B381-4B50-B1A8-BBB5259A0524}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1.ServiceModel", "WebApplication1\WebApplication1.ServiceModel\WebApplication1.ServiceModel.csproj", "{53E82AC1-DD1D-4C66-B55F-F9F4ACFB2F40}"
@@ -17,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{328C61A4-0EEF-4201-9381-51E235C63D9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{328C61A4-0EEF-4201-9381-51E235C63D9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{328C61A4-0EEF-4201-9381-51E235C63D9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{328C61A4-0EEF-4201-9381-51E235C63D9E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4389B305-B381-4B50-B1A8-BBB5259A0524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4389B305-B381-4B50-B1A8-BBB5259A0524}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4389B305-B381-4B50-B1A8-BBB5259A0524}.Release|Any CPU.ActiveCfg = Release|Any CPU

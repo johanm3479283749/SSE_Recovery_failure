@@ -1,28 +1,28 @@
 ﻿let eventSource = null;
 
-
-function handleSSE(event) {
-    console.log('handleSSE', event);
-}
-
 function submitMessage() {
-    const value = $("#SSE_Message").val();
+    const value = $('#SSE_Message').val();
 
     const headerConfig = {
         'Content-Type': 'application/json'
     }
     let headers = {};
 
-    var url = `/api/sse/message/mychannel/` + value;    
+    var url = `/api/sse/message/` + value;    
 
-    let result = this.fetch(url, this.getSettings('POST'))
-        .then(() => {
-            return true;
-        }).catch(() => {
-            return false;
-        });
+    let result = this.fetch(url, this.getSettings('POST'));
+}
 
-    console.log('submitMessage.result', result);
+function addMessage(message) {
+    var table = document.getElementById("messageTable");
+
+    var row = table.insertRow(0);
+
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+
+    cell1.innerHTML = new Date();
+    cell2.innerHTML = message;
 }
 
 function getSettings (method, body) {
@@ -43,8 +43,9 @@ function getSettings (method, body) {
 
 function subscribe() {
     if (!this.initSSE()) {
-        return Promise.resolve(false);
+        return;
     }
+
     const headerConfig = {
         'Content-Type': 'application/json'
     }
@@ -54,36 +55,33 @@ function subscribe() {
     var url = `/api/sse/subscribe/` + channel;
     
     let result = this.fetch(url, this.getSettings('POST'))
-        .then(() => {
-            console.log('message:', message);
-            return true;
-        }).catch(() => {
-            return false;
+        .catch(response => {
+            addMessage("ERROR: subscribe");
+            addMessage("ERROR: " + response);
         });
-
-    console.log('subscribe.result', result);
 
     return result;
 }
 
-function handleMessage(message) {
-    console.log('message received', message);
-}
-
 function initSSE() {
 
-    console.log('initSSE');
-
     if (!eventSource) {
-        eventSource = new EventSource('/api/event-stream?channels=mychannel&t=' + new Date().getTime());
-        eventSource.addEventListener('message', this.handleServerSentEvent);
+        try {
+            eventSource = new EventSource('/api/event-stream?channels=mychannel&t=' + new Date().getTime());
+            eventSource.addEventListener('message', this.handleServerSentEvent);
+        }
+        catch(ex)
+        {
+            addMessage("ERROR: initSSE");
+            addMessage("ERROR: " + ex);
+        }
     }
 
     return true;
 }
 
 function handleServerSentEvent(sse) {
-    console.log('handleServerSentEvent', sse);
+    addMessage(sse.data);
 }
 
 function fetchData(url) {

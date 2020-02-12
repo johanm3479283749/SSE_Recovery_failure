@@ -1,4 +1,8 @@
-﻿using ServiceStack;
+﻿using System;
+using System.Diagnostics;
+using System.Net.Sockets;
+using System.Text;
+using ServiceStack;
 using WebApplication1.ServiceModel;
 
 namespace WebApplication1.ServiceInterface
@@ -7,28 +11,19 @@ namespace WebApplication1.ServiceInterface
     {
         public IServerEvents ServerEvents { get; set; }
 
-        public SseService()
-        {
-            
-        }
-
         public SseService(IServerEvents serverEvents)
         {
             ServerEvents = serverEvents;
         }
 
-        public string Post(SubscribeServerSentEventRequest request)
+        public void Post(SubscribeServerSentEventRequest request)
         {
-            ServerEvents.SubscribeToChannels(null,new[] { request.Channel });
-
-            return "SSE subscribed";
+            ServerEvents.SubscribeToChannels(null, new[] {request.Channel});
         }
 
-        public string Post(ServerEventMessageRequest request)
+        public void Post(ServerEventMessageRequest request)
         {
-            ServerEvents.NotifyChannel(request.Channel, request.Message);
-
-            return "SSE Message sent";
+            ServerEvents.NotifyAll(request.Message);
         }
     }
 }
