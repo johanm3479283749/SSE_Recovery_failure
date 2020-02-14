@@ -46,13 +46,15 @@ namespace WebApplication1
                 LimitToAuthenticatedUsers = false,
                 NotifyChannelOfSubscriptions = false
             });
+
             Plugins.Add(new BasicAuthFeature { HtmlRedirect = "~/login" });
 
             SetConfig(new HostConfig
             {
                 AllowSessionIdsInHttpParams = true,
                 DebugMode = false,
-                EnableFeatures = Feature.All.Remove(Feature.Metadata)
+                EnableFeatures = Feature.All.Remove(Feature.Metadata),
+                HandlerFactoryPath = "api"
             });
 
             Container.Register(c =>
@@ -68,8 +70,6 @@ namespace WebApplication1
             );
 
             Container.Resolve<IServerEvents>().Start();
-
-            Container.DefaultReuse = ReuseScope.Request;
 
             ServiceExceptionHandlers.Add(HandleException);
 

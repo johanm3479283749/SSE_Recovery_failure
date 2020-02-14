@@ -14,6 +14,12 @@ function submitMessage() {
 }
 
 function addMessage(message) {
+    if (typeof message != 'string') {
+        message = JSON.stringify(message);
+    }
+
+    console.log('message', message);
+
     var table = document.getElementById("messageTable");
 
     var row = table.insertRow(0);
@@ -68,7 +74,17 @@ function initSSE() {
     if (!eventSource) {
         try {
             eventSource = new EventSource('/api/event-stream?channels=mychannel&t=' + new Date().getTime());
-            eventSource.addEventListener('message', this.handleServerSentEvent);
+            $(eventSource).handleServerEvents({
+                handlers: {
+                    onConnect: function(e) {
+                        console.log('onConnect',e);
+                    },
+                    onMessage: function (e) {
+                        console.log('onMessage',e);
+                        addMessage(e);
+                    }
+                }
+            });            
         }
         catch(ex)
         {
