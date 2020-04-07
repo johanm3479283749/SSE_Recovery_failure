@@ -100,9 +100,4 @@ function handleServerSentEvent(sse) {
     addMessage(sse.data);
 }
 
-function fetchData(url) {
-
-    return fetch(url, CtdsFetch.getSettings(method, body, setHeaders));
-}
-
 
